@@ -1,26 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New</title>
-</head>
-<body>
-    <form action="/campgrounds" method="POST">
-        <div class="form">
-            <label for="title">Title</label>
-            <input id="title" type="text" name="campgrounds[title]">
-            <br>
-            <br>
-            <label for="location">location</label>
-            <input id="location" type="text" name="campgrounds[location]">
-            <br>
-            <br>
-            <button>Submit</button>
-            <a href="/campgrounds">back</a>
+<% layout('layouts/boilerplate.ejs') %>
+    <div class="row">
+        <h1 class="text-center">New Campgroud</h1>
+        <div class="col-6 offset-3">
+            <form action="/campgrounds" method="POST" novalidate class="validated-form">
+                <div class="form">
+                    <div class="mb-3">
+                        <label class="form-label" for="title">Title</label>
+                        <input class="form-control " id="title" type="text" name="campgrounds[title]" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="location">location</label>
+                        <input class="form-control mb-3" id="location" type="text" name="campgrounds[location]" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="campground-price">campground-price</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="price">$</span>
+                        <input type="text" id="campground-price" class="form-control" aria-label="price" name="campgrounds[price]" required>
+                        <span class="input-group-text" id="price">.00</span>
+                    </div>
+                    </div>
+                   <div class="mb-3">
+                        <label class="form-label" for="imageurl">Image Url</label>
+                        <input class="form-control mb-3" id="imageurl" type="text" name="campgrounds[image]" required>
+                   </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="description">Description</label>
+                        <textarea class="form-control mb-3" id="description" type="text" name="campgrounds[description]" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-success">Submit</button>
+                    </div>       
+                    <a href="/campgrounds">All campgrounds</a>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
+    <script>
+         const forms = document.querySelectorAll('.validated-form')
 
-</body>
-</html>
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+    </script>
+
+
